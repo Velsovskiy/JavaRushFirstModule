@@ -3,12 +3,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class Encoder {
+    public final List<Character> ALPHABET=new ArrayList<>(Arrays.asList('a','b','c','d','e','f','g','h','i','k','l','m','n','o','p'
+    ,'q','r','s','t','u','v','w','x','y','z'));
+
+
     public void encodeFile(String FilePath,int key){
         Path path= Paths.get(FilePath);
         try {
@@ -38,37 +39,11 @@ public class Encoder {
             LetterCase=true;
             c=Character.toLowerCase(c);
         }
-        List<Character> alphabet=new ArrayList<>();
-        alphabet.add('a');
-        alphabet.add('b');
-        alphabet.add('c');
-        alphabet.add('d');
-        alphabet.add('e');
-        alphabet.add('f');
-        alphabet.add('g');
-        alphabet.add('h');
-        alphabet.add('i');
-        alphabet.add('j');
-        alphabet.add('k');
-        alphabet.add('l');
-        alphabet.add('m');
-        alphabet.add('n');
-        alphabet.add('o');
-        alphabet.add('p');
-        alphabet.add('q');
-        alphabet.add('r');
-        alphabet.add('s');
-        alphabet.add('t');
-        alphabet.add('u');
-        alphabet.add('v');
-        alphabet.add('w');
-        alphabet.add('x');
-        alphabet.add('y');
-        alphabet.add('z');
-        if (alphabet.contains(c)){
-            List<Character> encodedAlphabet=new ArrayList<>(alphabet);
+
+        if (ALPHABET.contains(c)){
+            List<Character> encodedAlphabet=new ArrayList<>(ALPHABET);
             Collections.rotate(encodedAlphabet,key);
-            int index=alphabet.indexOf(c);
+            int index=ALPHABET.indexOf(c);
             Character result=encodedAlphabet.get(index);
             if(LetterCase){
                 result=Character.toUpperCase(result);
