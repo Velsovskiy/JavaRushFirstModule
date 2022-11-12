@@ -10,8 +10,8 @@ public class Main {
             encoder.encodeFile(filePath, key);
         } else if ("decode".equals(command)) {
             System.out.println("decode");
-            Decoder decoder = new Decoder();
-            decoder.decodeFile(filePath, key);
+            Encoder encoder = new Encoder();
+            encoder.encodeFile(filePath, -key);
         }
 
     }
