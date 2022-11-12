@@ -5,27 +5,28 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Decoder {
-    public void decodeFile(String FilePath,int key){
-        Path path= Paths.get(FilePath);
+    public void decodeFile(String FilePath, int key) {
+        Path path = Paths.get(FilePath);
         try {
-            String text=Files.readString(path);
-            String encodedText=decode(text,key);
+            String text = Files.readString(path);
+            String encodedText = decode(text, key);
 
-            StringBuilder sb=new StringBuilder(FilePath);
-            sb.insert(FilePath.length()-4,"(decoded)");
-            Path outFilePath=Paths.get(sb.toString());
-            Files.write(outFilePath,encodedText.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder(FilePath);
+            sb.insert(FilePath.length() - 4, "(decoded)");
+            Path outFilePath = Paths.get(sb.toString());
+            Files.write(outFilePath, encodedText.getBytes(StandardCharsets.UTF_8));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public String decode (String text, int key){
-        Encoder decoder=new Encoder();
-        StringBuilder sb=new StringBuilder();
+
+    public String decode(String text, int key) {
+        Encoder decoder = new Encoder();
+        StringBuilder sb = new StringBuilder();
 
         for (char c : text.toCharArray()) {
-            sb.append((decoder.encode(c,key*-1)));
+            sb.append((decoder.encode(c, key * -1)));
         }
         return sb.toString();
     }
