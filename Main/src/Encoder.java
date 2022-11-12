@@ -9,21 +9,37 @@ public class Encoder {
     public final List<Character> ALPHABET = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p'
             , 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
     public List<Character> encodedAlphabet = new ArrayList<>(ALPHABET);
+    private final int beforeTXT=4;
 
 
-    public void encodeFile(String FilePath, int key) {
-        Path path = Paths.get(FilePath);
+    public void encodeFile(String filePath, int key) {
+        Path path = Paths.get(filePath);
         try {
             String text = Files.readString(path);
             String encodedText = encode(text, key);
-
-            StringBuilder sb = new StringBuilder(FilePath);
-            sb.insert(FilePath.length() - 4, "(encoded)");
-            Path outFilePath = Paths.get(sb.toString());
+            Path outFilePath = Paths.get(addNameOfFile(filePath,key));
             Files.write(outFilePath, encodedText.getBytes(StandardCharsets.UTF_8));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public String addNameOfFile(String filePath, int key) {
+        if (key > 0) {
+            StringBuilder sb = new StringBuilder(filePath);
+            sb.insert(filePath.length() - beforeTXT, "(encoded)");
+            return sb.toString();
+        } else {
+            if (key < 0) {
+                StringBuilder sb = new StringBuilder(filePath);
+                sb.insert(filePath.length() - beforeTXT, "(decoded)");
+                return sb.toString();
+            } else {
+                StringBuilder sb = new StringBuilder(filePath);
+                sb.insert(filePath.length() - beforeTXT, "(We do nothing)");
+                return sb.toString();
+            }
         }
     }
 
